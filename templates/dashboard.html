@@ -1,0 +1,99 @@
+{% extends "sidebar.html" %}
+
+    
+{% block content %}
+
+    <div class="container mt-5">
+        {% if user.getuserType() == 'Student' %}
+                <h3 class = "mb-5">Hi {{ user.getfName().title() }} {{ user.getlName().title() }} - here are your Application(s)</h3>
+                
+                {% if values is none %}
+                    <p class="text-center mt-5">Looks like you haven’t applied for a room yet!.</p>
+                {% else %}
+                    {% for application in values %}
+                        <div class="card mb-3  w-50 mx-auto">
+                            <div class="row g-0">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {{ " Your Application Status is " ~ application.get_status().title() }}
+                                        </h5>
+                                        <p><strong>Education Level:</strong> {{ application.get_education_level() }}</p>
+                                        <p><strong>Program:</strong> {{ application.get_program_type() }}</p>
+                                        <p><strong>Reason for Applying:</strong> {{ application.get_reason_for_applying() }}</p>
+                                        <p><strong>Co-curricular activities:</strong> {{ application.get_co_curricular_activities() }}</p>
+
+
+                                        <div class="d-flex justify-content-between align-items-center mt-4">
+                                            <a href="{{ url_for('application.trackApplication', room_id=application.get_room_id(), user_id =application.get_user_id()  ) }}" class="btn btn-warning">Track Application</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}  
+                {% endif %}
+        
+        {% elif user.getuserType() == 'Admin' %}
+                <h3 class = "mb-5">Hi {{ user.getfName().title() }} {{ user.getlName().title() }} - here are all the Students Application(s) </h3>
+                
+                {% if values is none %}
+                    <p class="text-center mt-5">There are no Application submitted yet!.</p>
+                {% else %}
+                    {% for application in values %}
+                        <div class="card mb-3  w-50 mx-auto">
+                            <div class="row g-0">
+                                <div class="col-md-8 d-flex align-items-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {{ " Your Application Status is " ~ application.get_status().title() }}
+                                        </h5>
+                                        <p><strong>Education Level:</strong> {{ application.get_education_level() }}</p>
+                                        <p><strong>Program:</strong> {{ application.get_program_type() }}</p>
+                                        <p><strong>Reason for Applying:</strong> {{ application.get_reason_for_applying() }}</p>
+                                        <p><strong>Co-curricular activities:</strong> {{ application.get_co_curricular_activities() }}</p>
+
+
+                                        <div class="d-flex justify-content-between align-items-center mt-4">
+                                            <a href="{{ url_for('application.approveApplocation', application_id=application.get_application_id()  ) }}" class="btn btn-success">Approve Application</a>
+                                            <a href="{{ url_for('application.rejectApplication', application_id=application.get_application_id() ) }}" class="btn btn-warning">Reject Application</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}  
+                {% endif %}
+        
+        {% elif user.getuserType() == 'IT' %}
+            <h3>All Admin Accounts</h3>
+            {% if values is none %}
+                    
+                    <p class="text-center mt-5">There is no admin account as yet!</p>
+            {% else %}
+                {% for value in values %}
+                    <div class="card mb-3 w-50 mx-auto shadow">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center bg-success text-white">
+                                <h4 class="p-3">{{ value.getfName() }} {{ value.getlName() }}</h4>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p><strong>Email:</strong> {{ value.getemail() }}</p>
+                                    <p><strong>Telephone:</strong> {{ value.gettelephone() }}</p>
+                                    <p><strong>Status:</strong> {{ value.getuserStatus() }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+
+
+        {% endif %}
+    </div>
+   
+
+{% endblock content %}

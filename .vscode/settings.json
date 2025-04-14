@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "root",
+            "database": "uwidormfinder",
+            "username": "root",
+            "password": "DH8417982dh",
+            "connectionTimeout": 30
+        }
+    ]
+}
